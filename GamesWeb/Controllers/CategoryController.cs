@@ -37,6 +37,7 @@ namespace GamesWeb.Controllers
             {
                 _context.Categories.Add(category);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "La catégorie a été ajoutée avec succès";
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -65,6 +66,7 @@ namespace GamesWeb.Controllers
             {
                 _context.Categories.Update(category);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "La catégorie a été modifiée avec succès";
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -89,6 +91,7 @@ namespace GamesWeb.Controllers
             }
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
+            TempData["success"] = "La catégorie a été supprimer avec succès";
             return RedirectToAction("Index");
         }
     }
