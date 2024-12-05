@@ -1,4 +1,5 @@
 ﻿using Games.DataAccess.Data;
+using Games.DataAccess.Repository.IRepository;
 using Games.Models;
 //using GamesWeb.Data;
 //using GamesWeb.Models;
@@ -9,15 +10,15 @@ namespace GamesWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryController(ApplicationDbContext context)
+        public CategoryController(ICategoryRepository categoryRepository)
         {
-            _context = context;
+            _categoryRepository = categoryRepository;
         }
         public async Task<IActionResult> Index()
         {
-            List<Category> categories = await _context.Categories.ToListAsync();
+            List<Category> categories = _categoryRepository.GetAll().ToList();
             return View(categories);
         }
         public IActionResult Create()
@@ -27,18 +28,18 @@ namespace GamesWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Category category)
         {
-            if (await _context.Categories.AnyAsync(c => c.Name == category.Name))
-            {
-                ModelState.AddModelError("name", "Le nom de la catégorie existe déjà dans la base de données");
-            }
-            if (await _context.Categories.AnyAsync(c => c.DisplayOrder == category.DisplayOrder))
-            {
-                ModelState.AddModelError("displayOrder", "L'ordre d'affichage existe déjà dans la base de données");
-            }
+            //if (await _context.Categories.AnyAsync(c => c.Name == category.Name))
+            //{
+            //    ModelState.AddModelError("name", "Le nom de la catégorie existe déjà dans la base de données");
+            //}
+            //if (await _categoryRepository.Categories.AnyAsync(c => c.DisplayOrder == category.DisplayOrder))
+            //{
+            //    ModelState.AddModelError("displayOrder", "L'ordre d'affichage existe déjà dans la base de données");
+            //}
             if (ModelState.IsValid)
             {
-                _context.Categories.Add(category);
-                await _context.SaveChangesAsync();
+                _categoryRepository.Add(category);
+                _categoryRepository.Save();
                 TempData["success"] = "La catégorie a été ajoutée avec succès";
                 return RedirectToAction("Index");
             }
@@ -46,7 +47,7 @@ namespace GamesWeb.Controllers
         }
         public async Task<IActionResult> Edit(int? id)
         {
-            Category? category = await _context.Categories.Where(c =>c.Id == id).FirstOrDefaultAsync();
+            Category? category = _categoryRepository.Get(u =>u.Id == id);
             if (category == null || id == null || id == 0)
             {
                 return NotFound();
@@ -56,18 +57,18 @@ namespace GamesWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Category category)
         {
-            if (await _context.Categories.Where(c => c.Id != category.Id).AnyAsync(c => c.Name == category.Name))
-            {
-                ModelState.AddModelError("name", "Le nom de la catégorie existe déjà dans la base de données");
-            }
-            if (await _context.Categories.Where(c => c.Id != category.Id).AnyAsync(c => c.DisplayOrder == category.DisplayOrder))
-            {
-                ModelState.AddModelError("displayOrder", "L'ordre d'affichage existe déjà dans la base de données");
-            }
+            //if (await _context.Categories.Where(c => c.Id != category.Id).AnyAsync(c => c.Name == category.Name))
+            //{
+            //    ModelState.AddModelError("name", "Le nom de la catégorie existe déjà dans la base de données");
+            //}
+            //if (await _context.Categories.Where(c => c.Id != category.Id).AnyAsync(c => c.DisplayOrder == category.DisplayOrder))
+            //{
+            //    ModelState.AddModelError("displayOrder", "L'ordre d'affichage existe déjà dans la base de données");
+            //}
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(category);
-                await _context.SaveChangesAsync();
+                _categoryRepository.Update(category);
+                _categoryRepository.Save();
                 TempData["success"] = "La catégorie a été modifiée avec succès";
                 return RedirectToAction("Index");
             }
@@ -76,7 +77,7 @@ namespace GamesWeb.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
-            Category? category = await _context.Categories.Where(c => c.Id == id).FirstOrDefaultAsync();
+            Category? category = _categoryRepository.Get(u => u.Id == id);
             if (category == null || id == null || id==0)
             {
                 return NotFound();
@@ -86,13 +87,13 @@ namespace GamesWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeletePost(int? id)
         {
-            Category? category = await _context.Categories.Where(c => c.Id == id).FirstOrDefaultAsync();
+            Category? category = _categoryRepository.Get(u => u.Id == id);
             if (category == null || id == null || id == 0) 
             {
                 return NotFound();
             }
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            _categoryRepository.Remove(category);
+            _categoryRepository.Save();
             TempData["success"] = "La catégorie a été supprimer avec succès";
             return RedirectToAction("Index");
         }
