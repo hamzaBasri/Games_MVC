@@ -1,13 +1,15 @@
 ﻿using Games.DataAccess.Data;
 using Games.DataAccess.Repository.IRepository;
 using Games.Models;
+
 //using GamesWeb.Data;
 //using GamesWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace GamesWeb.Controllers
+namespace GamesWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -47,7 +49,7 @@ namespace GamesWeb.Controllers
         }
         public async Task<IActionResult> Edit(int? id)
         {
-            Category? category = _unitOfWork.Category.Get(u =>u.Id == id);
+            Category? category = _unitOfWork.Category.Get(u => u.Id == id);
             if (category == null || id == null || id == 0)
             {
                 return NotFound();
@@ -78,7 +80,7 @@ namespace GamesWeb.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             Category? category = _unitOfWork.Category.Get(u => u.Id == id);
-            if (category == null || id == null || id==0)
+            if (category == null || id == null || id == 0)
             {
                 return NotFound();
             }
@@ -88,7 +90,7 @@ namespace GamesWeb.Controllers
         public async Task<IActionResult> DeletePost(int? id)
         {
             Category? category = _unitOfWork.Category.Get(u => u.Id == id);
-            if (category == null || id == null || id == 0) 
+            if (category == null || id == null || id == 0)
             {
                 return NotFound();
             }

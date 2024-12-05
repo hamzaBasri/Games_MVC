@@ -2,8 +2,9 @@ using System.Diagnostics;
 using Games.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GamesWeb.Controllers
+namespace GamesWeb.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
