@@ -10,15 +10,15 @@ namespace GamesWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ICategoryRepository categoryRepository)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _categoryRepository = categoryRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<IActionResult> Index()
         {
-            List<Category> categories = _categoryRepository.GetAll().ToList();
+            List<Category> categories = _unitOfWork.Category.GetAll().ToList();
             return View(categories);
         }
         public IActionResult Create()
@@ -38,8 +38,8 @@ namespace GamesWeb.Controllers
             //}
             if (ModelState.IsValid)
             {
-                _categoryRepository.Add(category);
-                _categoryRepository.Save();
+                _unitOfWork.Category.Add(category);
+                _unitOfWork.Save();
                 TempData["success"] = "La catégorie a été ajoutée avec succès";
                 return RedirectToAction("Index");
             }
@@ -47,7 +47,7 @@ namespace GamesWeb.Controllers
         }
         public async Task<IActionResult> Edit(int? id)
         {
-            Category? category = _categoryRepository.Get(u =>u.Id == id);
+            Category? category = _unitOfWork.Category.Get(u =>u.Id == id);
             if (category == null || id == null || id == 0)
             {
                 return NotFound();
@@ -67,8 +67,8 @@ namespace GamesWeb.Controllers
             //}
             if (ModelState.IsValid)
             {
-                _categoryRepository.Update(category);
-                _categoryRepository.Save();
+                _unitOfWork.Category.Update(category);
+                _unitOfWork.Save();
                 TempData["success"] = "La catégorie a été modifiée avec succès";
                 return RedirectToAction("Index");
             }
@@ -77,7 +77,7 @@ namespace GamesWeb.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
-            Category? category = _categoryRepository.Get(u => u.Id == id);
+            Category? category = _unitOfWork.Category.Get(u => u.Id == id);
             if (category == null || id == null || id==0)
             {
                 return NotFound();
@@ -87,13 +87,13 @@ namespace GamesWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeletePost(int? id)
         {
-            Category? category = _categoryRepository.Get(u => u.Id == id);
+            Category? category = _unitOfWork.Category.Get(u => u.Id == id);
             if (category == null || id == null || id == 0) 
             {
                 return NotFound();
             }
-            _categoryRepository.Remove(category);
-            _categoryRepository.Save();
+            _unitOfWork.Category.Remove(category);
+            _unitOfWork.Save();
             TempData["success"] = "La catégorie a été supprimer avec succès";
             return RedirectToAction("Index");
         }
