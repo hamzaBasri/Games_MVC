@@ -1,4 +1,4 @@
-namespace GamesWeb.Models
+namespace Games.Models
 {
     public class ErrorViewModel
     {

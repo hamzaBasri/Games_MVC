@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using GamesWeb.Models;
+using Games.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GamesWeb.Controllers

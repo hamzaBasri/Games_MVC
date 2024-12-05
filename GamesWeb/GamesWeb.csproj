@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Games.DataAccess\Games.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

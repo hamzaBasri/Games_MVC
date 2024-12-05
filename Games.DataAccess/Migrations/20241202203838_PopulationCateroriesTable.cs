@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace GamesWeb.Migrations
+namespace Games.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class PopulationCateroriesTable : Migration

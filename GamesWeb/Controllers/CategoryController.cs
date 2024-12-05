@@ -1,5 +1,7 @@
-﻿using GamesWeb.Data;
-using GamesWeb.Models;
+﻿using Games.DataAccess.Data;
+using Games.Models;
+//using GamesWeb.Data;
+//using GamesWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

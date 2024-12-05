@@ -1,7 +1,8 @@
-﻿using GamesWeb.Models;
+﻿
+using Games.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GamesWeb.Data
+namespace Games.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {
