@@ -1,9 +1,6 @@
 ﻿using Games.DataAccess.Data;
 using Games.DataAccess.Repository.IRepository;
 using Games.Models;
-
-//using GamesWeb.Data;
-//using GamesWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
