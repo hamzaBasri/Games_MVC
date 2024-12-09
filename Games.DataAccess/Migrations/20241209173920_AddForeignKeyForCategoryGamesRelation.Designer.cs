@@ -3,6 +3,7 @@ using Games.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Games.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241209173920_AddForeignKeyForCategoryGamesRelation")]
+    partial class AddForeignKeyForCategoryGamesRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -341,10 +344,6 @@ namespace Games.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("ListPrice")
                         .HasColumnType("float");
 
@@ -377,7 +376,6 @@ namespace Games.DataAccess.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Description = "Description Grand Theft Auto V",
-                            ImageUrl = "",
                             ListPrice = 22.0,
                             PriceABGames = 16.0,
                             PriceAmazon = 19.0,
@@ -390,7 +388,6 @@ namespace Games.DataAccess.Migrations
                             Id = 2,
                             CategoryId = 2,
                             Description = "Description FIFA 21",
-                            ImageUrl = "",
                             ListPrice = 22.0,
                             PriceABGames = 16.0,
                             PriceAmazon = 19.0,
@@ -403,7 +400,6 @@ namespace Games.DataAccess.Migrations
                             Id = 3,
                             CategoryId = 3,
                             Description = "Description Call of Duty",
-                            ImageUrl = "",
                             ListPrice = 22.0,
                             PriceABGames = 16.0,
                             PriceAmazon = 19.0,
@@ -416,7 +412,6 @@ namespace Games.DataAccess.Migrations
                             Id = 4,
                             CategoryId = 4,
                             Description = "Description Assassin's Creed",
-                            ImageUrl = "",
                             ListPrice = 22.0,
                             PriceABGames = 16.0,
                             PriceAmazon = 19.0,
@@ -429,7 +424,6 @@ namespace Games.DataAccess.Migrations
                             Id = 5,
                             CategoryId = 5,
                             Description = "Description Minecraft",
-                            ImageUrl = "",
                             ListPrice = 22.0,
                             PriceABGames = 16.0,
                             PriceAmazon = 19.0,
@@ -442,7 +436,6 @@ namespace Games.DataAccess.Migrations
                             Id = 6,
                             CategoryId = 6,
                             Description = "Description Fortnite",
-                            ImageUrl = "",
                             ListPrice = 22.0,
                             PriceABGames = 16.0,
                             PriceAmazon = 19.0,

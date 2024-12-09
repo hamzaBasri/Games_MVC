@@ -1,6 +1,8 @@
 ﻿using Games.DataAccess.Repository.IRepository;
 using Games.Models;
+using Games.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GamesWeb.Areas.Admin.Controllers
 {
@@ -15,24 +17,46 @@ namespace GamesWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Game> games = _unitOfWork.Game.GetAll().ToList();
+            
             return View(games);
         }
         public IActionResult Create()
-        {
-            return View();
+        {        
+            GameVM gameVM = new()
+            {
+                CategoryList = _unitOfWork.Category
+                .GetAll()
+                .Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                Game = new Game()
+                
+            };
+            return View(gameVM);
         }
         [HttpPost]
-        public IActionResult Create(Game game)
+        public IActionResult Create(GameVM gameVM)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Game.Add(game);
+                _unitOfWork.Game.Add(gameVM.Game);
                 _unitOfWork.Save();
                 TempData["success"] = "Le jeu a été ajouté avec succès";
                 return RedirectToAction("Index");
             }
-            return View(game);
-
+            else
+            {
+                gameVM.CategoryList = _unitOfWork.Category
+                    .GetAll()
+                    .Select(i => new SelectListItem
+                    {
+                        Text = i.Name,
+                        Value = i.Id.ToString()
+                    });
+                return View(gameVM);
+            }           
         }
 
         public IActionResult Edit(int? id)

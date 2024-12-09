@@ -1,4 +1,4 @@
-﻿@model Game
+﻿@model GameVM
 @{
     ViewData["Title"] = "Create";
 }
@@ -12,43 +12,54 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <form method="post" class="row">
+        <form method="post" class="row" enctype="multipart/form-data">
             <div class="border p-3">                
                 <div asp-validation-summary="All"></div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Title" class="form-control border-0 shadow" />
-                    <label asp-for="Title" class="ms-2"></label>
-                    <span asp-validation-for="Title" class="text-danger"></span>
+                    <input asp-for="Game.Title" class="form-control border-0 shadow" />
+                    <label asp-for="Game.Title" class="ms-2"></label>
+                    <span asp-validation-for="Game.Title" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Description" class="form-control border-0 shadow" />
-                    <label asp-for="Description" class="ms-2"></label>
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <input asp-for="Game.Description" class="form-control border-0 shadow" />
+                    <label asp-for="Game.Description" class="ms-2"></label>
+                    <span asp-validation-for="Game.Description" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Producer" class="form-control border-0 shadow" />
-                    <label asp-for="Producer" class="ms-2"></label>
-                    <span asp-validation-for="Producer" class="text-danger"></span>
+                    <input asp-for="Game.Producer" class="form-control border-0 shadow" />
+                    <label asp-for="Game.Producer" class="ms-2"></label>
+                    <span asp-validation-for="Game.Producer" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="ListPrice" class="form-control border-0 shadow" />
-                    <label asp-for="ListPrice" class="ms-2"></label>
-                    <span asp-validation-for="ListPrice" class="text-danger"></span>
+                    <input asp-for="Game.ListPrice" class="form-control border-0 shadow" />
+                    <label asp-for="Game.ListPrice" class="ms-2"></label>
+                    <span asp-validation-for="Game.ListPrice" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="PriceWalmart" class="form-control border-0 shadow" />
-                    <label asp-for="PriceWalmart" class="ms-2"></label>
-                    <span asp-validation-for="PriceWalmart" class="text-danger"></span>
+                    <input asp-for="Game.PriceWalmart" class="form-control border-0 shadow" />
+                    <label asp-for="Game.PriceWalmart" class="ms-2"></label>
+                    <span asp-validation-for="Game.PriceWalmart" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="PriceAmazon" class="form-control border-0 shadow" />
-                    <label asp-for="PriceAmazon" class="ms-2"></label>
-                    <span asp-validation-for="PriceAmazon" class="text-danger"></span>
+                    <input asp-for="Game.PriceAmazon" class="form-control border-0 shadow" />
+                    <label asp-for="Game.PriceAmazon" class="ms-2"></label>
+                    <span asp-validation-for="Game.PriceAmazon" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="PriceABGames" class="form-control border-0 shadow" />
-                    <label asp-for="PriceABGames" class="ms-2"></label>
-                    <span asp-validation-for="PriceABGames" class="text-danger"></span>
+                    <input asp-for="Game.PriceABGames" class="form-control border-0 shadow" />
+                    <label asp-for="Game.PriceABGames" class="ms-2"></label>
+                    <span asp-validation-for="Game.PriceABGames" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <select asp-for="@Model.Game.CategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow">
+                        <option disabled selected>Choisir une categorie</option>
+                    </select>
+                    <label asp-for="@Model.Game.CategoryId" class="ms-2"></label>
+                    <span asp-validation-for="@Model.Game.CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input type="file" class="form-control border-0 shadow" />
+                    <label asp-for="Game.ImageUrl" class="ms-2"></label>
                 </div>
             </div>
             <div class="row mt-3">

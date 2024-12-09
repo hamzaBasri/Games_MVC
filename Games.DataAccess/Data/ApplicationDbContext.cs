@@ -75,7 +75,9 @@ namespace Games.DataAccess.Data
                     ListPrice = 22,
                     PriceWalmart = 20,
                     PriceAmazon = 19,
-                    PriceABGames = 16
+                    PriceABGames = 16,
+                    CategoryId = 1,
+                    ImageUrl = string.Empty
 
                 },
                 new Game
@@ -87,7 +89,9 @@ namespace Games.DataAccess.Data
                     ListPrice = 22,
                     PriceWalmart = 20,
                     PriceAmazon = 19,
-                    PriceABGames = 16
+                    PriceABGames = 16,
+                    CategoryId = 2,
+                    ImageUrl = string.Empty
                 },
                 new Game
                 {
@@ -98,7 +102,9 @@ namespace Games.DataAccess.Data
                     ListPrice = 22,
                     PriceWalmart = 20,
                     PriceAmazon = 19,
-                    PriceABGames = 16
+                    PriceABGames = 16,
+                    CategoryId = 3,
+                    ImageUrl = string.Empty
                 },
                 new Game
                 {
@@ -109,7 +115,9 @@ namespace Games.DataAccess.Data
                     ListPrice = 22,
                     PriceWalmart = 20,
                     PriceAmazon = 19,
-                    PriceABGames = 16
+                    PriceABGames = 16,
+                    CategoryId = 4,
+                    ImageUrl = string.Empty
                 },
                 new Game
                 {
@@ -120,7 +128,9 @@ namespace Games.DataAccess.Data
                     ListPrice = 22,
                     PriceWalmart = 20,
                     PriceAmazon = 19,
-                    PriceABGames = 16
+                    PriceABGames = 16,
+                    CategoryId = 5,
+                    ImageUrl = string.Empty
                 },
                 new Game
                 {
@@ -131,7 +141,9 @@ namespace Games.DataAccess.Data
                     ListPrice = 22,
                     PriceWalmart = 20,
                     PriceAmazon = 19,
-                    PriceABGames = 16
+                    PriceABGames = 16,
+                    CategoryId = 6,
+                    ImageUrl = string.Empty
                 }
         );
         }
