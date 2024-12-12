@@ -18,7 +18,26 @@ namespace Games.DataAccess.Repository
         }
         public void Update(Game obj)
         {
-            _db.Games.Update(obj);
+            var objFromDb = _db.Games.FirstOrDefault(s => s.Id == obj.Id);
+            if (objFromDb != null) 
+            {
+                if (obj.ImageUrl != null)
+                {
+                    objFromDb.Title = obj.Title;
+                    objFromDb.Description = obj.Description;
+                    objFromDb.Producer = obj.Producer;
+                    objFromDb.ListPrice = obj.ListPrice;
+                    objFromDb.PriceWalmart = obj.PriceWalmart;
+                    objFromDb.PriceAmazon = obj.PriceAmazon;
+                    objFromDb.PriceABGames = obj.PriceABGames;
+                    objFromDb.CategoryId = obj.CategoryId;
+                    if (obj.ImageUrl != null)
+                    {
+                        objFromDb.ImageUrl = obj.ImageUrl;
+                    }
+                }
+                
+            }
         }
     }
 }

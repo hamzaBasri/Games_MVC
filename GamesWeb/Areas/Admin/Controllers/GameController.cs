@@ -10,17 +10,19 @@ namespace GamesWeb.Areas.Admin.Controllers
     public class GameController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public GameController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public GameController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _hostEnvironment = hostEnvironment;
         }
         public IActionResult Index()
         {
-            List<Game> games = _unitOfWork.Game.GetAll().ToList();
+            List<Game> games = _unitOfWork.Game.GetAll(includeProperties: "Category").ToList();
             
             return View(games);
         }
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {        
             GameVM gameVM = new()
             {
@@ -34,79 +36,106 @@ namespace GamesWeb.Areas.Admin.Controllers
                 Game = new Game()
                 
             };
-            return View(gameVM);
-        }
-        [HttpPost]
-        public IActionResult Create(GameVM gameVM)
-        {
-            if (ModelState.IsValid)
+            if(id == null || id == 0)
             {
-                _unitOfWork.Game.Add(gameVM.Game);
-                _unitOfWork.Save();
-                TempData["success"] = "Le jeu a été ajouté avec succès";
-                return RedirectToAction("Index");
+                //Create
+                return View(gameVM);
             }
             else
             {
-                gameVM.CategoryList = _unitOfWork.Category
-                    .GetAll()
-                    .Select(i => new SelectListItem
-                    {
-                        Text = i.Name,
-                        Value = i.Id.ToString()
-                    });
-                return View(gameVM);
-            }           
-        }
-
-        public IActionResult Edit(int? id)
-        {
-           Game? game = _unitOfWork.Game.Get(u => u.Id == id);
-            
+                //Update
+                gameVM.Game = _unitOfWork.Game.Get(u => u.Id == id);
                 
-           if (game == null || id == null || id == 0)
-           {
-                return NotFound();
-           }
-           return View(game);
-
+                return View(gameVM);
+            }
         }
         [HttpPost]
-        public IActionResult Edit(Game game)
+        public IActionResult Upsert(GameVM gameVM, IFormFile? file)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _unitOfWork.Game.Update(game);
-                _unitOfWork.Save();
-                TempData["success"] = "Le jeu a été modifié avec succès";
-                return RedirectToAction("Index");
-            }
-            return View(game);
-        }
-        public IActionResult Delete(int? id)
-        { 
-            Game? game = _unitOfWork.Game.Get(u => u.Id == id);
-            if (game == null)
-            {
-                TempData["error"] = "Le jeu n'existe pas";
-                return NotFound();
-            }
-            return View(game);
+                string webRootPath = _hostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    //File Name
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    //where to register the file
+                    string gamePath = Path.Combine(webRootPath, @"images\game");
+                    //Save the file
+
+                    if (!string.IsNullOrEmpty(gameVM.Game.ImageUrl))
+                    {
+                        //Delete the old Image
+                        string oldimagePath = Path.Combine(webRootPath, gameVM.Game.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldimagePath))
+                        {
+                            System.IO.File.Delete(oldimagePath);
+                        }
+
+
+                    }
+                    using (var fileStream = new FileStream(Path.Combine(gamePath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    gameVM.Game.ImageUrl = @"\images\game\" + fileName;
+                }
+                    if (gameVM.Game.Id == 0)
+                    {
+                        _unitOfWork.Game.Add(gameVM.Game);
+                    }
+                    else
+                    {
+                        _unitOfWork.Game.Update(gameVM.Game);
+                    }
+
+                    _unitOfWork.Save();
+                    TempData["success"] = "Le jeu a été ajouté avec succès";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    gameVM.CategoryList = _unitOfWork.Category
+                        .GetAll()
+                        .Select(i => new SelectListItem
+                        {
+                            Text = i.Name,
+                            Value = i.Id.ToString()
+                        });
+                    return View(gameVM);
+                }
             
         }
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePost(int? id)
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            Game? game = _unitOfWork.Game.Get(u => u.Id == id);
-            if (game == null)
-            {
-                
-                return NotFound();
-            }
-            _unitOfWork.Game.Remove(game);
-            _unitOfWork.Save();
-            TempData["success"] = "Le jeu a été supprimé avec succès";
-            return RedirectToAction("Index");
+            List<Game> objGameList = _unitOfWork.Game.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data = objGameList });
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var gameToBeDeleted =_unitOfWork.Game.Get(u => u.Id == id);
+            if (gameToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Erreur lors de la suppression" });
+            }
+            
+            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, gameToBeDeleted.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+            _unitOfWork.Game.Remove(gameToBeDeleted);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Suppression réussie" });
+        }
+
+
+        #endregion
     }
 }
