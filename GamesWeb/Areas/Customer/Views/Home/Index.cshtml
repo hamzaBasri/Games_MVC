@@ -17,8 +17,24 @@
                                 <p class="card-title text-warning text-center"> By : <b>@game.Producer</b></p>
                             </div>
                             <div class="pl-1">
-                                <p class="text-dark text-opacity-75 text-uppercase text-center">Le Plus Bas Prix : @game.PriceWalmart.ToString("c")</p>
+                                <p class="text-dark text-opacity-75 text-center mb-0">
+                                    List Prix : 
+                                    <span class="text-decoration-line-through">
+                                        @game.ListPrice.ToString("c")
+                                    </span>
+                                </p>
                             </div>
+                            <div class="pl-1">
+                                <p class="text-dark text-opacity-75 text-center">
+                                    Le Plus Bas Prix : 
+                                    <span>
+                                        @game.PriceWalmart.ToString("c")
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <a asp-action="Details" asp-route-id="@game.Id" class="btn btn-primary bg-gradient border-0 form-control">Details</a>
                         </div>
                     </div>
                 </div>

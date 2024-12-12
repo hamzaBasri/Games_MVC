@@ -22,6 +22,11 @@ namespace GamesWeb.Areas.Customer.Controllers
             IEnumerable<Game> gameList = _unitOfWork.Game.GetAll(includeProperties: "Category");
             return View(gameList);
         }
+        public IActionResult Details(int id)
+        {
+            Game game = _unitOfWork.Game.Get(u => u.Id == id, includeProperties: "Category");
+            return View(game);
+        }
 
         public IActionResult Privacy()
         {
