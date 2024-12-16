@@ -1,12 +1,16 @@
 ﻿using Games.DataAccess.Repository.IRepository;
 using Games.Models;
 using Games.Models.ViewModels;
+using Games.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GamesWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
+
     public class GameController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

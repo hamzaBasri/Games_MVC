@@ -1,12 +1,15 @@
 ﻿using Games.DataAccess.Data;
 using Games.DataAccess.Repository.IRepository;
 using Games.Models;
+using Games.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamesWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
