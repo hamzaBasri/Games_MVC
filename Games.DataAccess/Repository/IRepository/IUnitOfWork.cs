@@ -10,6 +10,7 @@ namespace Games.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         IGameRepository Game { get; }
+        IPlatformRepository Platform { get; }
         void Save();
     }
 }

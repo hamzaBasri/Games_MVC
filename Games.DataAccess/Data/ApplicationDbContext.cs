@@ -14,10 +14,17 @@ namespace Games.DataAccess.Data
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Game> Games { get; set; }
+        public DbSet<Platform> Platforms { get; set; }
+
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Game>()
+                .HasMany(g => g.Platforms)
+                .WithMany(p => p.Games);
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "Adventure", DisplayOrder = 2 },

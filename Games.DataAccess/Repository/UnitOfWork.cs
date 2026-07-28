@@ -13,11 +13,13 @@ namespace Games.DataAccess.Repository
         private readonly ApplicationDbContext _db;
         public ICategoryRepository Category { get; private set; }
         public IGameRepository Game { get; private set; }
+        public IPlatformRepository Platform { get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Category = new CategoryRepository(_db);
             Game = new GameRepository(_db);
+            Platform = new PlatformRepository(_db); 
         }
         
 
