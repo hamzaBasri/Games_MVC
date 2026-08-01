@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\Game\" />
+    <Folder Include="wwwroot\images\platform\" />
   </ItemGroup>
 
 </Project>
