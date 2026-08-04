@@ -2,7 +2,31 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<form method="get" asp-action="Index" class="mb-4">
+    <div class="row g-2">
+        <div class="col-md-4">
+            <select name="categoryId" class="form-select" asp-items="ViewBag.CategoryList">
+                <option value="">-- Toutes les catégories --</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select name="platformId" class="form-select" asp-items="ViewBag.PlatformList">
+                <option value="">-- Toutes les plateformes --</option>
+            </select>
+        </div>
+        <div class="col-md-3 position-relative">
+            <input type="text" id="searchNameInput" name="searchName"
+                   value="@Context.Request.Query["searchName"]"
+                   class="form-control" placeholder="Rechercher par nom..." autocomplete="off" />
+            <div id="suggestionsBox" class="list-group position-absolute w-100" style="z-index:1000;"></div>
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary form-control">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
 <div class="row pb-3">
     @foreach (var game in Model)
     {
@@ -42,3 +66,6 @@
         </div>
     }
 </div>
+@section Scripts {
+    <script src="~/js/search.js"></script>
+}
