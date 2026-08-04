@@ -39,6 +39,8 @@ namespace Games.Models
         public Category Category { get; set; }
         [ValidateNever]
         public string ImageUrl { get; set; }
+
+        [ValidateNever]
         public ICollection<Platform> Platforms { get; set; }
 
     }

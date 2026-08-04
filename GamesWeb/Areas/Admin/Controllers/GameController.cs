@@ -84,7 +84,17 @@ namespace GamesWeb.Areas.Admin.Controllers
                     }
                     gameVM.Game.ImageUrl = @"\images\game\" + fileName;
                 }
-                    if (gameVM.Game.Id == 0)
+                if (gameVM.SelectedPlatformIds != null && gameVM.SelectedPlatformIds.Any())
+                {
+                    gameVM.Game.Platforms = _unitOfWork.Platform.GetAll()
+                        .Where(p => gameVM.SelectedPlatformIds.Contains(p.Id))
+                        .ToList();
+                }
+                else
+                {
+                    gameVM.Game.Platforms = new List<Platform>();
+                }
+                if (gameVM.Game.Id == 0)
                     {
                         _unitOfWork.Game.Add(gameVM.Game);
                     }
@@ -97,18 +107,25 @@ namespace GamesWeb.Areas.Admin.Controllers
                     TempData["success"] = "Le jeu a été ajouté avec succès";
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    gameVM.CategoryList = _unitOfWork.Category
-                        .GetAll()
-                        .Select(i => new SelectListItem
-                        {
-                            Text = i.Name,
-                            Value = i.Id.ToString()
-                        });
-                    return View(gameVM);
-                }
-            
+            else
+            {
+                gameVM.CategoryList = _unitOfWork.Category
+                    .GetAll()
+                    .Select(i => new SelectListItem
+                    {
+                        Text = i.Name,
+                        Value = i.Id.ToString()
+                    });
+                gameVM.PlatformList = _unitOfWork.Platform
+                    .GetAll()
+                    .Select(i => new SelectListItem
+                    {
+                        Text = i.Name,
+                        Value = i.Id.ToString()
+                    });
+                return View(gameVM);
+            }
+
         }
 
         #region API CALLS
