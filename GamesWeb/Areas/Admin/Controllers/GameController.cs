@@ -27,7 +27,7 @@ namespace GamesWeb.Areas.Admin.Controllers
             return View(games);
         }
         public IActionResult Upsert(int? id)
-        {        
+        {
             GameVM gameVM = new()
             {
                 CategoryList = _unitOfWork.Category
@@ -37,10 +37,16 @@ namespace GamesWeb.Areas.Admin.Controllers
                     Text = i.Name,
                     Value = i.Id.ToString()
                 }),
+                PlatformList = _unitOfWork.Platform
+                .GetAll()
+                .Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
                 Game = new Game()
-                
             };
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 //Create
                 return View(gameVM);
@@ -48,8 +54,8 @@ namespace GamesWeb.Areas.Admin.Controllers
             else
             {
                 //Update
-                gameVM.Game = _unitOfWork.Game.Get(u => u.Id == id);
-                
+                gameVM.Game = _unitOfWork.Game.Get(u => u.Id == id, includeProperties: "Platforms");
+                gameVM.SelectedPlatformIds = gameVM.Game.Platforms.Select(p => p.Id);
                 return View(gameVM);
             }
         }
