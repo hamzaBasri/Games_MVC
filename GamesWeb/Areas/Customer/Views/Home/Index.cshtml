@@ -30,19 +30,19 @@
 <div class="row pb-3">
     @foreach (var game in Model)
     {
-        <div class="col-lg-3 col-sm-6">
-            <div class="row p-2">
-                <div class="col-12 p-1">
-                    <div class="card border-0 p-3 shadow border-top border-5 rounded">
+        <div class="col-lg-3 col-sm-6 d-flex">
+            <div class="row p-2 w-100">
+                <div class="col-12 p-1 d-flex">
+                    <div class="card border-0 p-3 shadow border-top border-5 rounded d-flex flex-column w-100">
                         <img src="@game.ImageUrl" class="card-img-top rounded" />
-                        <div class="card-body pb-0">
+                        <div class="card-body pb-0 d-flex flex-column flex-grow-1">
                             <div class="pl-1">
                                 <p class="card-title h5 text-dark opacity-75 text-uppercase text-center">@game.Title</p>
                                 <p class="card-title text-warning text-center"> By : <b>@game.Producer</b></p>
                             </div>
                             <div class="pl-1">
                                 <p class="text-dark text-opacity-75 text-center mb-0">
-                                    List Prix : 
+                                    List Prix :
                                     <span class="text-decoration-line-through">
                                         @game.ListPrice.ToString("c")
                                     </span>
@@ -50,15 +50,15 @@
                             </div>
                             <div class="pl-1">
                                 <p class="text-dark text-opacity-75 text-center">
-                                    Le Plus Bas Prix : 
+                                    Le Plus Bas Prix :
                                     <span>
                                         @game.PriceWalmart.ToString("c")
                                     </span>
                                 </p>
                             </div>
-                        </div>
-                        <div>
-                            <a asp-action="Details" asp-route-id="@game.Id" class="btn btn-primary bg-gradient border-0 form-control">Details</a>
+                            <div class="mt-auto">
+                                <a asp-action="Details" asp-route-id="@game.Id" class="btn btn-primary bg-gradient border-0 form-control">Details</a>
+                            </div>
                         </div>
                     </div>
                 </div>

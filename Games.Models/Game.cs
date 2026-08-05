@@ -31,8 +31,8 @@ namespace Games.Models
         public double PriceAmazon { get; set; }
         [Required]
         [Range(1, 1000)]
-        [Display(Name = "Prix ABGames")]
-        public double PriceABGames { get; set; } 
+        [Display(Name = "Prix EBGames")]
+        public double PriceEBGames { get; set; }
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]

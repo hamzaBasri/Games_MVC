@@ -15,7 +15,7 @@ function loadDataTable() {
             { data: 'listPrice', "width": "10%" },
             { data: 'priceWalmart', "width": "10%" },
             { data: 'priceAmazon', "width": "10%" },
-            { data: 'priceABGames', "width": "10%" },
+            { data: 'priceEBGames', "width": "10%" },
             { data: 'category.name', "width": "10%" },
             {
                 data: 'id',

@@ -27,7 +27,7 @@ namespace Games.DataAccess.Repository
                 objFromDb.ListPrice = obj.ListPrice;
                 objFromDb.PriceWalmart = obj.PriceWalmart;
                 objFromDb.PriceAmazon = obj.PriceAmazon;
-                objFromDb.PriceABGames = obj.PriceABGames;
+                objFromDb.PriceEBGames = obj.PriceEBGames;
                 objFromDb.CategoryId = obj.CategoryId;
                 objFromDb.Platforms = obj.Platforms;
 
