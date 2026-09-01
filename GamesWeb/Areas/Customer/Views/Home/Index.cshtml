@@ -30,6 +30,11 @@
 <div class="row pb-3">
     @foreach (var game in Model)
     {
+        var allPrices = game.Listings != null
+            ? game.Listings.SelectMany(l => new[] { l.PriceEBGames, l.PriceAmazon, l.PriceWalmart }).Where(p => p > 0)
+            : Enumerable.Empty<double>();
+        var lowestPrice = allPrices.Any() ? allPrices.Min() : (double?)null;
+
         <div class="col-lg-3 col-sm-6 d-flex">
             <div class="row p-2 w-100">
                 <div class="col-12 p-1 d-flex">
@@ -42,19 +47,20 @@
                             </div>
                             <div class="pl-1">
                                 <p class="text-dark text-opacity-75 text-center mb-0">
-                                    List Prix :
-                                    <span class="text-decoration-line-through">
-                                        @game.ListPrice.ToString("c")
-                                    </span>
+                                    List Prix : <span>@game.ListPrice.ToString("c")</span>
                                 </p>
                             </div>
                             <div class="pl-1">
-                                <p class="text-dark text-opacity-75 text-center">
-                                    Le Plus Bas Prix :
-                                    <span>
-                                        @game.PriceWalmart.ToString("c")
-                                    </span>
-                                </p>
+                                @if (lowestPrice.HasValue)
+                                {
+                                    <p class="text-dark text-opacity-75 text-center">
+                                        À partir de : <span class="text-warning fw-semibold">@lowestPrice.Value.ToString("c")</span>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="text-muted text-center fst-italic">Prix non disponible</p>
+                                }
                             </div>
                             <div class="mt-auto">
                                 <a asp-action="Details" asp-route-id="@game.Id" class="btn btn-primary bg-gradient border-0 form-control">Details</a>

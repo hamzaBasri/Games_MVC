@@ -23,6 +23,6 @@ namespace Games.Models
         public string? LogoUrl { get; set; }
 
         [ValidateNever]
-        public ICollection<Game> Games { get; set; }
+        public ICollection<GameListing> Listings { get; set; }
     }
 }

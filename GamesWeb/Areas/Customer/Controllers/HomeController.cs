@@ -20,7 +20,7 @@ namespace GamesWeb.Areas.Customer.Controllers
 
         public IActionResult Index(int? categoryId, int? platformId, string? searchName)
         {
-            IEnumerable<Game> gameList = _unitOfWork.Game.GetAll(includeProperties: "Category,Platforms");
+            IEnumerable<Game> gameList = _unitOfWork.Game.GetAll(includeProperties: "Category,Listings,Listings.Platform");
 
             if (categoryId != null && categoryId != 0)
             {
@@ -29,7 +29,7 @@ namespace GamesWeb.Areas.Customer.Controllers
 
             if (platformId != null && platformId != 0)
             {
-                gameList = gameList.Where(g => g.Platforms.Any(p => p.Id == platformId));
+                gameList = gameList.Where(g => g.Listings.Any(l => l.PlatformId == platformId));
             }
 
             if (!string.IsNullOrEmpty(searchName))
@@ -67,7 +67,7 @@ namespace GamesWeb.Areas.Customer.Controllers
 
         public IActionResult Details(int id)
         {
-            Game game = _unitOfWork.Game.Get(u => u.Id == id, includeProperties: "Category");
+            Game game = _unitOfWork.Game.Get(u => u.Id == id, includeProperties: "Category,Listings,Listings.Platform");
             return View(game);
         }
 

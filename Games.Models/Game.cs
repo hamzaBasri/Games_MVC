@@ -21,18 +21,6 @@ namespace Games.Models
         public string Producer { get; set; }
         [Required]
         public double ListPrice { get; set; }
-        [Required]
-        [Display(Name = "Prix Walmart")]
-        [Range(1,1000)]
-        public double PriceWalmart { get; set; }
-        [Required]
-        [Range(1, 1000)]
-        [Display(Name = "Prix Amazon")]
-        public double PriceAmazon { get; set; }
-        [Required]
-        [Range(1, 1000)]
-        [Display(Name = "Prix EBGames")]
-        public double PriceEBGames { get; set; }
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
@@ -41,7 +29,6 @@ namespace Games.Models
         public string ImageUrl { get; set; }
 
         [ValidateNever]
-        public ICollection<Platform> Platforms { get; set; }
-
+        public ICollection<GameListing> Listings { get; set; }
     }
 }

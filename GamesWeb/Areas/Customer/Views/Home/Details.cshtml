@@ -1,99 +1,137 @@
 ﻿@model Game
-<form method="post">
-    <div class="card shadow border-0 mt-4 mb-4">
-        <div class="card-header bg-secondary bg-gradient text-light py-4">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h3 class="text-white text-uppercase">@Model.Title</h3>
-                    <p class="text-white-50 fw-semibold mb-0">Par : @Model.Producer</p>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="py-3">
-                <div class="row">
-                    <div class="col-6 col-md-2 offset-lg-1 pb-1">
-                        <a asp-action="Index" class="btn btn-outline-primary bg-gradient mb-5 fw-semibold btn-sm text-uppercase">
-                            <small>Back to home</small>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
-                        <img src="@Model.ImageUrl" width="100%" class="rounded" />
-                    </div>
-                    <div class="col-12 col-lg-6 offset-lg-1">
-
-                        <div class="col-12 col-md-6 pb-4">
-                            <span class="badge">Category : @Model.Category.Name</span>
-                        </div>
-                        <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50 ">@Model.Title</h6>
-                        </div>
-                        <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50  pb-2">
-                                Meilleur Prix:
-                                <span class="">
-                                    @Model.ListPrice.ToString("c")
-                                </span>
-                            </h6>
-                        </div>
-                        <div class="row text-center ps-2">
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">Quantity</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">ABGames</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">Amazon</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">Walmart</div>
-                            </div>
-                        </div>
-                        <div class="row text-center ps-2">
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>Price</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>@Model.PriceEBGames.ToString("c")</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>@Model.PriceAmazon.ToString("c")</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>@Model.PriceWalmart.ToString("c")</div>
-                            </div>
-                        </div>
-                        <div class="row pl-2 my-3">
-                            <p class="text-secondary lh-sm">Description : @Html.Raw(Model.Description)</p>
-                        </div>
-                        <div class="row pl-2 mb-3">
-                            <div class="col-md-4">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold"
-                                          id="inputGroup-sizing-default">
-                                        Count
-                                    </span>
-                                    <input type="number" value="1" class="form-control text-end"
-                                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" disabled
-                                        class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
-                                    Add to Cart (Comming Soon...)
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+<div class="card shadow border-0 mt-4 mb-4">
+    <div class="card-header bg-secondary bg-gradient text-light py-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h3 class="text-white text-uppercase">@Model.Title</h3>
+                <p class="text-white-50 fw-semibold mb-0">Par : @Model.Producer</p>
             </div>
         </div>
     </div>
-</form>
+    <div class="card-body">
+        <div class="py-3">
+            <div class="row">
+                <div class="col-6 col-md-2 offset-lg-1 pb-1">
+                    <a asp-action="Index" class="btn btn-outline-primary bg-gradient mb-5 fw-semibold btn-sm text-uppercase">
+                        <small>Back to home</small>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
+                    <img id="listingImage" src="@Model.ImageUrl" width="100%" class="rounded" />
+                </div>
+                <div class="col-12 col-lg-6 offset-lg-1">
+
+                    <div class="col-12 col-md-6 pb-4">
+                        <span class="badge">Category : @Model.Category.Name</span>
+                    </div>
+                    <div class="row ps-2">
+                        <h6 class="text-dark text-opacity-50 ">@Model.Title</h6>
+                    </div>
+                    <div class="row ps-2">
+                        <h6 class="text-dark text-opacity-50  pb-2">
+                            Meilleur Prix:
+                            <span class="">
+                                @Model.ListPrice.ToString("c")
+                            </span>
+                        </h6>
+                    </div>
+
+                    @{
+                        var listings = Model.Listings != null ? Model.Listings.ToList() : new List<GameListing>();
+                    }
+
+                    @if (listings.Count > 1)
+                    {
+                        <div class="row ps-2 mb-2">
+                            <div class="col-8">
+                                <label class="form-label mb-1">Choisir une plateforme :</label>
+                                <select id="platformSelect" class="form-select form-select-sm">
+                                    @foreach (var listing in listings)
+                                    {
+                                        <option value="@listing.Id">@listing.Platform.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row text-center ps-2">
+                        <div class="p-1 col-4 bg-white border-bottom">
+                            <div class="text-dark text-opacity-50 fw-semibold">EBGames</div>
+                        </div>
+                        <div class="p-1 col-4 bg-white border-bottom">
+                            <div class="text-dark text-opacity-50 fw-semibold">Amazon</div>
+                        </div>
+                        <div class="p-1 col-4 bg-white border-bottom">
+                            <div class="text-dark text-opacity-50 fw-semibold">Walmart</div>
+                        </div>
+                    </div>
+                    <div class="row text-center ps-2 mb-3">
+                        <div class="p-1 col-4 bg-white">
+                            <a id="linkEBGames" href="#" target="_blank" class="text-warning fw-bold text-decoration-none"></a>
+                        </div>
+                        <div class="p-1 col-4 bg-white">
+                            <a id="linkAmazon" href="#" target="_blank" class="text-warning fw-bold text-decoration-none"></a>
+                        </div>
+                        <div class="p-1 col-4 bg-white">
+                            <a id="linkWalmart" href="#" target="_blank" class="text-warning fw-bold text-decoration-none"></a>
+                        </div>
+                    </div>
+
+                    <div class="row pl-2 my-3">
+                        <p class="text-secondary lh-sm">Description : @Html.Raw(Model.Description)</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const gameTitle = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Title));
+        const listings = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(listings.Select(l => new
+            {
+                id = l.Id,
+                        platformName = l.Platform.Name,
+                        imageUrl = string.IsNullOrEmpty(l.ImageUrl) ? Model.ImageUrl : l.ImageUrl,
+                        priceEBGames = l.PriceEBGames,
+                        priceAmazon = l.PriceAmazon,
+                        priceWalmart = l.PriceWalmart
+                })));
+
+        function updateListing(listingId) {
+            const listing = listings.find(l => l.id == listingId);
+            if (!listing) return;
+
+            document.getElementById('listingImage').src = listing.imageUrl;
+
+            const query = encodeURIComponent(gameTitle + " " + listing.platformName);
+
+            const linkEBGames = document.getElementById('linkEBGames');
+            linkEBGames.href = `https://www.ebgames.ca/SearchResult/Quicksearch?q=${query}`;
+            linkEBGames.textContent = listing.priceEBGames.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' });
+
+            const linkAmazon = document.getElementById('linkAmazon');
+            linkAmazon.href = `https://www.amazon.ca/s?k=${query}`;
+            linkAmazon.textContent = listing.priceAmazon.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' });
+
+            const linkWalmart = document.getElementById('linkWalmart');
+            linkWalmart.href = `https://www.walmart.ca/search?q=${query}`;
+            linkWalmart.textContent = listing.priceWalmart.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' });
+        }
+
+        const select = document.getElementById('platformSelect');
+        if (select) {
+            updateListing(select.value);
+            select.addEventListener('change', function() {
+                updateListing(this.value);
+            });
+        } else if (listings.length > 0) {
+            updateListing(listings[0].id);
+        }
+    </script>
+}

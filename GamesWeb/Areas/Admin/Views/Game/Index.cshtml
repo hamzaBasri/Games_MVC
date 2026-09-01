@@ -22,9 +22,9 @@
                 </a>
             </div>
         </div>
-        <table id="tblData"  class="table table-bordered table-striped" width="100%">
+        <table id="tblData" class="table table-bordered table-striped" width="100%">
             <thead>
-                <tr>                  
+                <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.First().Title)
                     </th>
@@ -38,15 +38,6 @@
                         @Html.DisplayNameFor(model => model.First().ListPrice)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.First().PriceWalmart)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().PriceAmazon)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().PriceEBGames)
-                    </th>
-                    <th>
                         Categorie
                     </th>
                     <th>
@@ -54,11 +45,11 @@
                     </th>
                 </tr>
             </thead>
-            
+
         </table>
     </div>
 </div>
 
-@section Scripts{
-<script src="~/js/game.js"></script>
+@section Scripts {
+    <script src="~/js/game.js"></script>
 }

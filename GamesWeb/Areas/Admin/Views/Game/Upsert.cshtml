@@ -6,7 +6,7 @@
     <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">@(Model.Game.Id != 0? "Modifier" : "Creer") Game</h2>
+                <h2 class="text-white py-2">@(Model.Game.Id != 0 ? "Modifier" : "Creer") Game</h2>
 
             </div>
         </div>
@@ -39,42 +39,11 @@
                             <span asp-validation-for="Game.ListPrice" class="text-danger"></span>
                         </div>
                         <div class="form-floating py-2 col-12">
-                            <input asp-for="Game.PriceWalmart" class="form-control border-0 shadow" />
-                            <label asp-for="Game.PriceWalmart" class="ms-2"></label>
-                            <span asp-validation-for="Game.PriceWalmart" class="text-danger"></span>
-                        </div>
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="Game.PriceAmazon" class="form-control border-0 shadow" />
-                            <label asp-for="Game.PriceAmazon" class="ms-2"></label>
-                            <span asp-validation-for="Game.PriceAmazon" class="text-danger"></span>
-                        </div>
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="Game.PriceEBGames" class="form-control border-0 shadow" />
-                            <label asp-for="Game.PriceEBGames" class="ms-2"></label>
-                            <span asp-validation-for="Game.PriceEBGames" class="text-danger"></span>
-                        </div>
-                        <div class="form-floating py-2 col-12">
                             <select asp-for="@Model.Game.CategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow">
                                 <option disabled selected>Choisir une categorie</option>
                             </select>
                             <label asp-for="@Model.Game.CategoryId" class="ms-2"></label>
                             <span asp-validation-for="@Model.Game.CategoryId" class="text-danger"></span>
-                        </div>
-                        <div class="py-2 col-12">
-                            <label class="ms-2 mb-1 d-block">Plateformes</label>
-                            <div class="p-2 border rounded shadow-sm">
-                                @foreach (var platform in Model.PlatformList)
-                                {
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox"
-                                               class="form-check-input"
-                                               name="SelectedPlatformIds"
-                                               value="@platform.Value"
-                                               checked="@(Model.SelectedPlatformIds != null && Model.SelectedPlatformIds.Contains(int.Parse(platform.Value)))" />
-                                        <label class="form-check-label">@platform.Text</label>
-                                    </div>
-                                }
-                            </div>
                         </div>
                         <div class="form-floating py-2 col-12">
                             <input type="file" name="file" class="form-control border-0 shadow" />
@@ -85,11 +54,11 @@
                 <div class="col-2">
                     <img src="@Model.Game.ImageUrl" class="img-fluid" />
                 </div>
-                
+
             </div>
-            
+
             <div class="row mt-3">
-                @if(Model.Game.Id != 0)
+                @if (Model.Game.Id != 0)
                 {
                     <div class="col-6 col-md-3">
                         <button type="submit" class="btn btn-primary form-control">Modifier</button>
@@ -97,11 +66,11 @@
                 }
                 else
                 {
-                <div class="col-6 col-md-3">
-                    <button type="submit" class="btn btn-primary form-control">Creer</button>
-                </div>
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Creer</button>
+                    </div>
                 }
-                
+
                 <div class="col-6 col-md-3">
                     <a asp-controller="Game" asp-action="Index" class="btn btn-outline-primary border form-control">
                         Retour
@@ -116,11 +85,11 @@
 
 @section Scripts {
     <script>
-          tinymce.init({
+        tinymce.init({
             selector: 'textarea',
             plugins: 'anchor autolink charmap codesample emoticons lists table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | numlist bullist indent outdent',
-          });
+        });
     </script>
     @{
 
@@ -128,4 +97,3 @@
         <partial name="_ValidationScriptsPartial" />
     }
 }
-

@@ -13,11 +13,5 @@ namespace Games.Models.ViewModels
         public Game Game { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
-
-        [ValidateNever]
-        public IEnumerable<SelectListItem> PlatformList { get; set; }
-        
-        [ValidateNever]
-        public IEnumerable<int> SelectedPlatformIds { get; set; }
     }
 }

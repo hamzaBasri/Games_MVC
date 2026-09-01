@@ -16,14 +16,13 @@ namespace Games.DataAccess.Data
         public DbSet<Game> Games { get; set; }
         public DbSet<Platform> Platforms { get; set; }
 
+        public DbSet<GameListing> GameListings { get; set; }
+
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Game>()
-                .HasMany(g => g.Platforms)
-                .WithMany(p => p.Games);
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
@@ -83,10 +82,7 @@ namespace Games.DataAccess.Data
                     Title = "GTA V",
                     Description = "Description Grand Theft Auto V",
                     Producer = "Producteur GTA V",
-                    ListPrice = 22,
-                    PriceWalmart = 20,
-                    PriceAmazon = 19,
-                    PriceEBGames = 16,
+                    ListPrice = 22,               
                     CategoryId = 1,
                     ImageUrl = string.Empty
 
@@ -98,9 +94,6 @@ namespace Games.DataAccess.Data
                     Description = "Description FIFA 21",
                     Producer = "Producteur FIFA 21",
                     ListPrice = 22,
-                    PriceWalmart = 20,
-                    PriceAmazon = 19,
-                    PriceEBGames = 16,
                     CategoryId = 2,
                     ImageUrl = string.Empty
                 },
@@ -111,9 +104,6 @@ namespace Games.DataAccess.Data
                     Description = "Description Call of Duty",
                     Producer = "Producteur Call of Duty",
                     ListPrice = 22,
-                    PriceWalmart = 20,
-                    PriceAmazon = 19,
-                    PriceEBGames = 16,
                     CategoryId = 3,
                     ImageUrl = string.Empty
                 },
@@ -124,9 +114,6 @@ namespace Games.DataAccess.Data
                     Description = "Description Assassin's Creed",
                     Producer = "Producteur Assassin's Creed",
                     ListPrice = 22,
-                    PriceWalmart = 20,
-                    PriceAmazon = 19,
-                    PriceEBGames = 16,
                     CategoryId = 4,
                     ImageUrl = string.Empty
                 },
@@ -137,9 +124,6 @@ namespace Games.DataAccess.Data
                     Description = "Description Minecraft",
                     Producer = "Producteur Minecraft",
                     ListPrice = 22,
-                    PriceWalmart = 20,
-                    PriceAmazon = 19,
-                    PriceEBGames = 16,
                     CategoryId = 5,
                     ImageUrl = string.Empty
                 },
@@ -150,9 +134,6 @@ namespace Games.DataAccess.Data
                     Description = "Description Fortnite",
                     Producer = "Producteur Fortnite",
                     ListPrice = 22,
-                    PriceWalmart = 20,
-                    PriceAmazon = 19,
-                    PriceEBGames = 16,
                     CategoryId = 6,
                     ImageUrl = string.Empty
                 }

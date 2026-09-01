@@ -23,7 +23,7 @@ namespace GamesWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Game> games = _unitOfWork.Game.GetAll(includeProperties: "Category").ToList();
-            
+
             return View(games);
         }
         public IActionResult Upsert(int? id)
@@ -31,13 +31,6 @@ namespace GamesWeb.Areas.Admin.Controllers
             GameVM gameVM = new()
             {
                 CategoryList = _unitOfWork.Category
-                .GetAll()
-                .Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-                PlatformList = _unitOfWork.Platform
                 .GetAll()
                 .Select(i => new SelectListItem
                 {
@@ -54,8 +47,7 @@ namespace GamesWeb.Areas.Admin.Controllers
             else
             {
                 //Update
-                gameVM.Game = _unitOfWork.Game.Get(u => u.Id == id, includeProperties: "Platforms");
-                gameVM.SelectedPlatformIds = gameVM.Game.Platforms.Select(p => p.Id);
+                gameVM.Game = _unitOfWork.Game.Get(u => u.Id == id);
                 return View(gameVM);
             }
         }
@@ -90,39 +82,22 @@ namespace GamesWeb.Areas.Admin.Controllers
                     }
                     gameVM.Game.ImageUrl = @"\images\game\" + fileName;
                 }
-                if (gameVM.SelectedPlatformIds != null && gameVM.SelectedPlatformIds.Any())
+                if (gameVM.Game.Id == 0)
                 {
-                    gameVM.Game.Platforms = _unitOfWork.Platform.GetAll()
-                        .Where(p => gameVM.SelectedPlatformIds.Contains(p.Id))
-                        .ToList();
+                    _unitOfWork.Game.Add(gameVM.Game);
                 }
                 else
                 {
-                    gameVM.Game.Platforms = new List<Platform>();
+                    _unitOfWork.Game.Update(gameVM.Game);
                 }
-                if (gameVM.Game.Id == 0)
-                    {
-                        _unitOfWork.Game.Add(gameVM.Game);
-                    }
-                    else
-                    {
-                        _unitOfWork.Game.Update(gameVM.Game);
-                    }
 
-                    _unitOfWork.Save();
-                    TempData["success"] = "Le jeu a été ajouté avec succès";
-                    return RedirectToAction("Index");
-                }
+                _unitOfWork.Save();
+                TempData["success"] = "Le jeu a été ajouté avec succès";
+                return RedirectToAction("Index");
+            }
             else
             {
                 gameVM.CategoryList = _unitOfWork.Category
-                    .GetAll()
-                    .Select(i => new SelectListItem
-                    {
-                        Text = i.Name,
-                        Value = i.Id.ToString()
-                    });
-                gameVM.PlatformList = _unitOfWork.Platform
                     .GetAll()
                     .Select(i => new SelectListItem
                     {
@@ -146,12 +121,12 @@ namespace GamesWeb.Areas.Admin.Controllers
         [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            var gameToBeDeleted =_unitOfWork.Game.Get(u => u.Id == id);
+            var gameToBeDeleted = _unitOfWork.Game.Get(u => u.Id == id);
             if (gameToBeDeleted == null)
             {
                 return Json(new { success = false, message = "Erreur lors de la suppression" });
             }
-            
+
             var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, gameToBeDeleted.ImageUrl.TrimStart('\\'));
             if (System.IO.File.Exists(oldImagePath))
             {

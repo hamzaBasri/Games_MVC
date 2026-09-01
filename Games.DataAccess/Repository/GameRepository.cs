@@ -25,11 +25,7 @@ namespace Games.DataAccess.Repository
                 objFromDb.Description = obj.Description;
                 objFromDb.Producer = obj.Producer;
                 objFromDb.ListPrice = obj.ListPrice;
-                objFromDb.PriceWalmart = obj.PriceWalmart;
-                objFromDb.PriceAmazon = obj.PriceAmazon;
-                objFromDb.PriceEBGames = obj.PriceEBGames;
                 objFromDb.CategoryId = obj.CategoryId;
-                objFromDb.Platforms = obj.Platforms;
 
                 if (obj.ImageUrl != null)
                 {
