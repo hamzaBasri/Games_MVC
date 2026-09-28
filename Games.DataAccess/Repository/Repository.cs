@@ -51,7 +51,7 @@ namespace Games.DataAccess.Repository
                     query = query.Include(includeProperty);
                 }
             }
-            return query.ToList();
+            return query.AsNoTracking().ToList();
         }
 
         public void Remove(T entity)

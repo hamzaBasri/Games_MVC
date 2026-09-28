@@ -1,0 +1,68 @@
+﻿@model GameListingVM
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Modifier Listing pour @ViewBag.GameTitle </h2>
+                <img src="@ViewBag.GameImageUrl" alt="@ViewBag.GameTitle" class="img-fluid" style="max-height: 200px;">
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+
+            <input asp-for="GameListing.Id" hidden />
+            <input asp-for="GameListing.ImageUrl" hidden />
+            <input asp-for="GameListing.GameId" hidden />
+
+            <label asp-for="GameListing.PlatformId">Plateforme</label>
+            <select asp-for="GameListing.PlatformId" asp-items="@Model.PlatformList" class="form-select">
+                <option disabled selected>Choisir une Platforme</option>
+            </select>
+            <span asp-validation-for="GameListing.PlatformId" class="text-danger"></span>
+            
+            <label asp-for="GameListing.PriceEBGames">Prix EB Games</label>
+            <input type="number" asp-for="GameListing.PriceEBGames" />
+
+            <label asp-for="GameListing.PriceAmazon">Prix Amazon</label>
+            <input type="number" asp-for="GameListing.PriceAmazon" />
+
+            <label asp-for="GameListing.PriceWalmart">Prix Walmart</label>
+            <input type="number" asp-for="GameListing.PriceWalmart" />
+
+            <div class="mb-3">
+                <label class="form-label">Image</label>
+                <input type="file" name="file" class="form-control" />
+                @if (!string.IsNullOrEmpty(Model.GameListing.ImageUrl))
+                {
+                    <img src="@Model.GameListing.ImageUrl" width="80" class="mt-2" />
+                }
+            </div>
+            @if (Model.GameListing.Id != 0)
+            {
+                <div class="col-6 col-md-3">
+                    <button type="submit" class="btn btn-primary form-control">Enregistrer</button>
+                </div>
+            }
+            else
+            {
+                <div class="col-6 col-md-3">
+                    <button type="submit" class="btn btn-primary form-control">Créer</button>
+                </div>
+            }
+            <div class="col-6 col-md-3">
+                <a asp-controller="GameListing" asp-action="Index" asp-route-gameId="@Model.GameListing.GameId" class="btn btn-outline-primary border form-control">
+                    Retour
+                </a>
+            </div>
+
+        </form>
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Game Listing";
+}
+
+<div class="card shadow border-0 mt-4"> 
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Liste Game Listing pour @ViewBag.GameTitle </h2>
+                <img src="@ViewBag.GameImageUrl" alt="@ViewBag.GameTitle" class="img-fluid" style="max-height: 200px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+                <a asp-controller="Game" asp-area="Admin" asp-action="Index" class="btn btn-danger">
+                    <i class="bi bi-arrow-left-circle"></i> Retour
+                </a>
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="GameListing" asp-action="Upsert" asp-route-gameId="@ViewBag.GameId" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Créer une édition
+                </a>
+            </div>
+        </div>
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Plateforme (Édition de Jeux)</th>
+                    <th>PriceEBGames</th>
+                    <th>PriceAmazon</th>
+                    <th>PriceWalmart</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/gamelisting.js"></script>
+}
+
+    
+
+
